@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>测试接口</title>
+  <style>
+    body{
+      font-size: 16px;
+    }
+    *{
+      /* margin: 0;
+      padding: 0; */
+      /* margin: 0 auto; */
+    }
+    li{
+      list-style: none;
+    }
+    .block{
+      margin-bottom: 20px;
+      text-align: center
+    }
+    .blockTitle{
+      margin-bottom: 5px;
+    }
+    .blockConent{
+      margin-top: 10px;
+    }
+    .longInput{
+      width: 600px;
+      height: 20px;
+    }
+    .shortInput{
+      width: 300px;
+      height: 20px;
+    }
+    .apiData{
+      margin-bottom: 10px;
+    }
+    #response{
+      margin-top: 10px;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="block">
+    <div class="blockTitle" >接口url</div>
+    <div class="blockContent"><input  class="longInput" type="text" id="apiUrl" placeholder="请填写正确的接口url" ></div>  
+  </div>
+    <div class="block">
+    <div class="blockTitle" >接口的请求方式</div>
+    <div class="blockContent"><input class="longInput" type="text" id="apiType" placeholder="请填写正确的接口请求方式 POST 或 GET"></div>
+  </div>
+  <div class="block">
+    <div class="blockTitle" >接口的请求参数</div>
+    <div class="apiData"><input type="text" class="dataKey shortInput" placeholder="请求参数的key"> <input type="text" class="dataValue shortInput" placeholder="请求参数的value"></div>
+    <div class="apiData"><input type="text" class="dataKey shortInput" placeholder="请求参数的key"> <input type="text" class="dataValue shortInput" placeholder="请求参数的value"></div>
+    <div class="apiData"><input type="text" class="dataKey shortInput" placeholder="请求参数的key"> <input type="text" class="dataValue shortInput" placeholder="请求参数的value"></div>
+    <div class="apiData"><input type="text" class="dataKey shortInput" placeholder="请求参数的key"> <input type="text" class="dataValue shortInput" placeholder="请求参数的value"></div>
+    <div class="apiData"><input type="text" class="dataKey shortInput" placeholder="请求参数的key"> <input type="text" class="dataValue shortInput" placeholder="请求参数的value"></div>
+    <div class="apiData"><input type="text" class="dataKey shortInput" placeholder="请求参数的key"> <input type="text" class="dataValue shortInput" placeholder="请求参数的value"></div>
+    <div class="apiData"><input type="text" class="dataKey shortInput" placeholder="请求参数的key"> <input type="text" class="dataValue shortInput" placeholder="请求参数的value"></div>
+  </div>
+  <div class="block"><button id="send">请求接口</button></div>
+  <div class="block">
+    <div class="blockTitle">返回的数据</div>
+    <textarea name="" id="response" cols="100" rows="10" placeholder="接口返回的数据"></textarea>
+  </div>
+  
+</body>
+<script src="../libs/js/jquery-3.3.1.min.js"></script>
+<script>
+  $("#send").on("click",function(){
+    $("#response").val('')
+    var param = {}
+    var apiUrl = $("#apiUrl").val()
+    var apiType = $("#apiType").val()
+    var $dataKey = $(".dataKey")
+    var $dataVal = $(".dataValue")
+    for(var i = 0; i < $dataKey.length; i++){
+      if($dataKey[i].value){
+        param[$dataKey[i].value] = encodeURI($dataVal[i].value)
+        // param[$dataKey[i].value] = $dataVal[i].value
+      }
+    }
+    param = 
+    $.ajax({
+      url: apiUrl,
+      type: apiType,
+      dataType:'jsonp',
+      xhrFields: {
+        withCredentials: true
+      },
+      data: param,
+      success: function(res){
+        $("#response").val(JSON.stringify(res));
+      },
+      error: function(err){
+        $("#response").val(JSON.stringify(err));
+        alert("返回结果是错误的")
+      }
+    })
+  })
+</script>
+</html>
