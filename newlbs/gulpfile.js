@@ -1,15 +1,19 @@
 let gulp = require('gulp');
 let fs = require('fs');
-let  wrapper = require('gulp-wrapper');
+let wrapper = require('gulp-wrapper');
 let browserSync = require('browser-sync');  //启动本地服务
 let gulpSequence = require('gulp-sequence');    //管理任务队列
 let sourcemaps = require('gulp-sourcemaps');    //sass的maps插件，方便定位sass
 let sass = require('gulp-sass');    //sass转css插件
+let less = require('gulp-less');	//less转css插件
+
 let minifyCSS = require('gulp-clean-css'); //压缩css
 let uglify = require('gulp-uglify');    //压缩js
 let replace = require('gulp-replace');	//替换字符串
 
-let watcherCss = gulp.watch('static/sass/*.sass', ['devDistCss']);
+let babel = require('gulp-babel');
+
+let watcherCss = gulp.watch('static/less/*.less', ['devDistCss']);
 let watcherJs = gulp.watch('static/js/*.js',['devDistJs']);
 let watcherHtml = gulp.watch('views/*.html', ['devDistHtml']);
 
@@ -60,16 +64,19 @@ gulp.task('server', function() {
 	});
 });
 // 开发时的css处理
-gulp.task('devDistCss', function(){
-	gulp.src('css/*.scss')
-	.pipe(sourcemaps.init())
-	.pipe(sass().on('error', sass.logError))
-	.pipe(sourcemaps.write('css/maps'))
-	.pipe(gulp.dest('css'));
+gulp.task('devDistCss',function(){
+	gulp.src('static/less/*.less')
+			.pipe(sourcemaps.init())
+			.pipe(less())
+			.pipe(sourcemaps.write('lessmap'))
+			.pipe(gulp.dest('static/css'))
 })
 // 开发时的js处理
 gulp.task('devDistJs', function(){
 	gulp.src('static/js/*.js')
+	.pipe(babel({
+		presets: ['es2015']
+	}))
 	.pipe(gulp.dest('build/js'))
 })
 // 开发时的html处理
