@@ -1,29 +1,28 @@
-'use strict';
 
 /**================================================================
  接口对象
  =================================================================*/
-window.proHub = function () {
+window.proHub = (function() {
 	var timeout = 7000;
 
 	var baseUrl = "//10.222.11.216:8001/";
 
 	var obj = {
 		// 获取商户列表
-		getShopList: function getShopList(data, callback, failFn) {
+		getShopList: function(data, callback, failFn) {
 			var url = 'omm/ml.htm';
 			requestJsonp.call(this, arguments, url);
 		},
 		// 获取商户详情接口
-		getShopDetail: function getShopDetail(data, callback, failFn) {
+		getShopDetail: function(data, callback, failFn) {
 			var url = 'omm/md.htm';
 			requestJsonp.call(this, arguments, url);
 		},
 		// 领奖接口
-		getCoupon: function getCoupon(data, callback, failFn) {
+		getCoupon: function(data, callback, failFn) {
 			var url = 'omm/tp.htm';
 			requestJsonp.call(this, arguments, url);
-		}
+		},
 	};
 
 	// get jsonp 请求
@@ -45,10 +44,10 @@ window.proHub = function () {
 			return;
 		}
 		if (!/^\/\//gmi.test(url)) {
-			url = baseUrl + url;
+			url = baseUrl + url
 		}
-		if (url.indexOf(".json") > 2) {
-			url = url.replace(baseUrl, '');
+		if(url.indexOf(".json")>2){
+			url = url.replace(baseUrl,'');
 			dataType = 'json';
 		}
 		type = type || "get";
@@ -61,10 +60,10 @@ window.proHub = function () {
 			async: async,
 			timeout: timeout, // 超时处理
 			dataType: dataType,
-			success: function success(res) {
+			success: function(res) {
 				callback && callback(res);
 			},
-			error: function error(XMLHttpRequest, textStatus, errorThrown) {
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
 				failFn && failFn(data);
 				console.log(XMLHttpRequest.status);
 				console.log(XMLHttpRequest.readyState);
@@ -73,4 +72,4 @@ window.proHub = function () {
 		});
 	}
 	return obj;
-}();
+})();

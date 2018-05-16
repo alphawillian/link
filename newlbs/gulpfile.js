@@ -1,4 +1,3 @@
-
 let gulp = require('gulp');
 let fs = require('fs');
 let wrapper = require('gulp-wrapper');
@@ -13,8 +12,7 @@ let uglify = require('gulp-uglify');    //压缩js
 let replace = require('gulp-replace');	//替换字符串
 
 let babel = require('gulp-babel');
-let amdOptimize = require("amd-optimize");
-let browserify =  require("browserify");
+let browserify = require("browserify");
 
 let watcherCss = gulp.watch('static/less/*.less', ['devDistCss']);
 let watcherJs = gulp.watch('static/js/*.js',['devDistJs']);
@@ -75,40 +73,25 @@ gulp.task('devDistCss',function(){
 			.pipe(gulp.dest('static/css'))
 })
 // 开发时的js处理
+
 gulp.task('devDistJs', function(){
+	gulp.src('static/js/*.js')
+	.pipe(gulp.dest('build/js'))
+})
+
+
+gulp.task('devDistJs1',
+  gulpSequence(['es6'],['browser'])
+)
+gulp.task('es6', function(){
 	gulp.src('static/js/*.js')
 	.pipe(babel({
 		presets: ['es2015']
 	}))
-	// .pipe(amdOptimize("main", {
-	// 	paths: {  
-	// 		"jquery": "../../libs/jquery/dist/jquery.min",  
-	// 		"jquery.serializeJSON": "../../libs/jquery.serializeJSON/jquery.serializejson.min",  
-	// 		"sug": "src/js/suggestion/suggestion",  
-	// 		"validate": "../util/src/js/util/validate",  
-	// 		"urlParam": "../util/src/js/util/url.param",
-	// 		"./api.js": "./api.js"
-	// 	},  
-	// 	shim: {  
-	// 		"jquery.serializeJSON": ['jquery']  
-	// 	}
-	// }))
-	.pipe(gulp.dest('temp/js'))
-	gulp.src('temp/js/*.js')
-	.pipe(amdOptimize("main", {
-		paths: {  
-			"jquery": "../../libs/jquery/dist/jquery.min",  
-			"jquery.serializeJSON": "../../libs/jquery.serializeJSON/jquery.serializejson.min",  
-			"sug": "src/js/suggestion/suggestion",  
-			"validate": "../util/src/js/util/validate",  
-			"urlParam": "../util/src/js/util/url.param",
-			"./api.js": "./api.js"
-		},  
-		shim: {  
-			"jquery.serializeJSON": ['jquery']  
-		}
-	}))
 	.pipe(gulp.dest('build/js'))
+})
+gulp.task('browser', function(){
+	// browserify().add(['./static/js/server.js','./static/js/server1.js']).bundle().pipe(fs.createWriteStream('./build/js/main.js'))
 })
 // 开发时的html处理
 gulp.task('devDistHtml', function(){
@@ -208,8 +191,4 @@ gulp.task('dest', function(cb){
 //开发时执行该命令 开发完成后需依次执行 gulp build 和 gulp dest 命令。
 gulp.task('dev',function(cb){
   gulpSequence('server', cb);
-})
-
-gulp.task('browser', function(){
-	browserify().add('./build/js/server.js').bundle().pipe(fs.createWriteStream('./static/js/test.js'))
 })
