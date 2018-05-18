@@ -30,8 +30,285 @@ body{
 .container{
   width: 100vw;
   height: 100vh;
+  position: relative;
   #map{
     width: 100%;
     height: 100%;
+  }
+  .storeDialog{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    .slideBar{
+      width: 100%;
+      height: 0.25rem;
+      border-bottom: 1px solid #E7E8E7;
+      text-align: center;
+      i{
+        display: inline-block;
+        width: 0.5rem;
+        height: 0.05rem;
+        background: #E7E8E7;
+        border-radius: 0.025rem;
+        position: relative;
+        top: 0.02rem;
+      }
+    }
+    .block{
+      border-bottom: 1px solid #E7E8E7;
+      padding: 0 0.2rem;
+    }
+    .storeContent{
+      width: 100%;
+      .storeBase{
+        padding-top: 0.1rem;
+        padding-bottom: 0.15rem;
+        .storeBase_left{
+          display: inline-block;
+          margin-right: 0.08rem;
+          vertical-align: top;
+          .storeLogo{
+            width: 0.45rem;
+            height: 0.45rem;
+          }
+        }
+        .storeBase_middle{
+          display: inline-block;
+          width: 2.2rem;
+          margin-top: 5px;
+          .storeName{
+            font-size: 0.14rem;
+            color: #333333;
+          }
+          .storeSupport{
+            font-size: 0.12rem;
+            color: #999999;
+            margin-top: 0.08rem;
+            margin-bottom: 0.11rem;
+            .supportItem{
+              font-size: 0.1rem;
+              height: 0.17rem;
+              line-height: 0.17rem;
+              border: 1px solid #999999;
+              border-radius: 3px;
+              padding: 0 3px;
+              margin-left: 4px;
+              
+            }
+          }
+          .storeCoupon_base{
+            .couponBaseList{
+              .item{
+                white-space: nowrap;
+                height: 0.18rem;
+                line-height: 0.18rem;
+                padding: 0 2px 0 0;
+                position: relative;
+                margin-right: 5px;
+                margin-bottom: 5px;
+                display: inline-block;
+                .itemDes{
+                  display: inline-block;
+                  text-align: center;
+                  width: 0.17rem;
+                  height: 0.17rem;
+                  color: white;
+                }
+                &.jiang{
+                  border: 1px solid #D5045B;
+                  border-radius: 0.9rem;
+                  .itemDes{
+                    background: #D5045B;
+                    border-radius: 50%;
+                  }
+                }
+                &.cu{
+                  border: 1px solid #F68902;
+                  border-radius: 0.9rem;
+                  .itemDes{
+                    background: #F68902;
+                    border-radius: 50%;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .storeBase_right{
+          display: inline-block;
+          margin-top: 5px;
+          float: right;
+          font-size: 0.14rem;
+          color: #333333;
+          text-align: right;
+          .storeActivity{
+            text-align: center;
+            img{
+              display: inline-block;
+              width: 0.27rem;
+              height: 0.26rem;
+            }
+          }
+        }
+      }
+      .storeAddress{
+        padding: 0.08rem 0.25rem;
+        padding-left: 0.4rem;
+        position: relative;
+        .addressTxt{
+          display: inline-block;
+          max-width: 2.2rem;
+          font-size: 0.12rem;
+          color: #333333;
+          &::before{
+            content: "";
+            width: 0.1rem;
+            height: 0.14rem;
+            background-image: url("../../static/images/dingwei.png");
+            background-size: 100% 100%;
+            vertical-align: top;
+            position: absolute;
+            top: 0.1rem;
+            left: 0.25rem;
+          }
+        }
+        .addressNavigation{
+          display: inline-block;
+          width: 0.225rem;
+          height: 0.225rem;
+          background-color: #EDEEED;
+          float: right;
+          text-align: center;
+          border-radius: 4px;
+          position: absolute;
+          top: 50%;
+          right: 0.25rem;
+          transform: translateY(-50%);
+          i{
+            display: inline-block;
+            width: 0.16rem;
+            height: 0.16rem;
+            background-image: url("../../static/images/daohang.png");
+            background-size: 100% 100%;
+            margin-top: 0.03rem;
+          }
+        }
+      }
+      .storeCoupon{
+        padding-top: 0.12rem;
+        padding-bottom: 0.12rem;
+        overflow: scroll;
+        .coupon{
+          display: inline-block;
+          width: 1.08rem;
+          height: 0.9rem;
+          font-size: 0;
+          text-align: center;
+          border-radius: 4px;
+          overflow: hidden;
+          .top{
+            width: 100%;
+            height: 0.62rem;
+            font-size: 0.1rem;
+            color: #333333;
+            position: relative;
+          }
+          .bottom{
+            width: 100%;
+            height: 0.28rem;
+            line-height: 0.28rem;
+            font-size: 0.12rem;
+            color: white;
+            background: red;
+          }
+          &.type_hongbao{
+            background-image: url("../../static/images/quan_bg_hongbao.png");
+            background-size: 100% 100%;
+          }
+          &.type_qiang,&.type_yiling{
+            background-image: url("../../static/images/quan_bg.png");
+            background-size: 100% 100%;
+          }
+          &.type_hongbao{
+            .top{
+              .hongbaoTxt{
+                display: inline-block;
+                margin-top: 0.28rem;
+                max-width: 0.4rem;
+              }
+            }
+          }
+          &.type_qiang,&.type_yiling{
+            .top{
+              .typeSign{
+                display: inline-block;
+                width: 0.31rem;
+                height: 0.31rem;
+                background: transparent;
+                color: black;
+                position: absolute;
+                top: 0;
+                left: 0;
+                span{
+                  display: inline-block;
+                  // width: 100%;
+                  text-align: center;
+                  color: white;
+                  position: absolute;
+                  top: 0;
+                  left: 2px;
+                }
+                &::before{
+                  border: 0.16rem solid transparent; 
+                  border-top: 0.16rem solid #359ed1; 
+                  border-left: 0.16rem solid #359ed1;
+                  width: 0; height: 0; 
+                  position: absolute; 
+                  top: 0; 
+                  left: 0; 
+                  content: "";
+                }
+              }
+              .detailIcon{
+                display: inline-block;
+                width: 0.12rem;
+                height: 0.12rem;
+                background-image: url("../../static/images/detailIcon.png");
+                background-size: 100% 100%;
+                position: absolute;
+                top: 0.05rem;
+                right: 0.05rem;
+              }
+              .priceLine{
+                color: #333333;
+                padding-top: 0.04rem;
+                .priceNum{
+                  font-size: 0.25rem; 
+                }
+              }
+              .nameLine{}
+              .descLine{
+                color: #999999;
+              }
+            }
+          }
+          &.type_qiang{
+            .top{
+              .progerssLine{
+                .bar{
+                  display: inline-block;
+                  width: 0.89rem;
+                  height: 0.05rem;
+                  background-image: url("../../static/images/jindutiao_bg.png");
+                  background-size: 100% 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    
   }
 }

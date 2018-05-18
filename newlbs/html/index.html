@@ -4,13 +4,92 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no ">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="../static/css/index.css">
+  <link rel="stylesheet" href="../build/css/index.css">
   <title>新版猎户地图</title>
 </head>
 <body>
   <div class="container">
-      <div id="map"></div>
+    <div id="map"></div>
+    <div class="storeDialog slideUp">
+      <div class="slideBar"><i></i></div>
+      <div class="storeContent">
+        <div class="block storeBase">
+          <span class="storeBase_left">
+            <img src="../static/images/shanghuLogo.png" alt="" class="storeLogo">
+          </span>
+          <span class="storeBase_middle">
+            <div class="storeName">屈臣氏(亦庄经济开发区店)</div>
+            <div class="storeSupport">
+              <span>支持</span><span class="supportItem">京东付款码</span><span class="supportItem">京东闪付</span>
+            </div>
+            <span class="storeCoupon_base">
+              <span class="couponBaseList">
+                <span class="item jiang">
+                  <span class="itemDes">奖</span>
+                  <span class="itemTxt">消费赢免单</span>
+                </span>
+                <span class="item cu">
+                  <span class="itemDes">促</span>
+                  <span class="itemTxt">满10减5元</span>
+                </span>
+                <span class="item jiang">
+                  <span class="itemDes">奖</span>
+                  <span class="itemTxt">消费赢免单</span>
+                </span>
+                <span class="item cu">
+                  <span class="itemDes">促</span>
+                  <span class="itemTxt">满10减5元</span>
+                </span>
+              </span>
+            </span>
+          </span>
+          <span class="storeBase_right">
+            <div class="storeDistance"><span class="distanceNum">0.76</span><span class="distanceSign">km</span> </div>
+            <div class="storeActivity"><img src="../static/images/detail_hongbao.png" alt="" srcset=""> </div>
+          </span>
+        </div>
+        <div class="block storeAddress">
+          <span class="addressTxt">北京市大兴区亦庄经济开发区科创十一街 京东集团A座</span>
+          <span class="addressNavigation"><i></i></span>
+        </div>
+        <div class="block storeCoupon">
+          <span class="coupon type_hongbao">
+            <div class="top">
+              <div class="hongbaoTxt">百万红包等你拿</div>
+            </div>
+            <div class="bottom">
+              <span class="choujiang">抽奖</span>
+            </div>
+          </span>
+          <span class="coupon type_qiang">
+            <div class="top">
+              <span class="typeSign"><span>抢</span></span>
+              <div class="detailIcon"></div>
+              <div class="priceLine"><span class="priceNum">20</span><span class="priceSign">元</span></div>
+              <div class="nameLine">京东闪付优惠券</div>
+              <div class="progressLine"><span class="bar"><div class="barIn"></div></span></div>
+            </div>
+            <div class="bottom">
+              <span class="lingqu">立即领取</span>
+            </div>
+          </span>
+          <span class="coupon type_yiling">
+            <div class="top">
+              <div class="detailIcon"></div>
+              <div class="priceLine"><span class="priceNum">20</span><span class="priceSign">元</span></div>
+              <div class="nameLine">京东闪付优惠券</div>
+              <div class="descLine">满100元可用</div>
+            </div>
+            <div class="bottom">
+              <span class="shiyong">立即使用</span>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
+  
+
   
   
 </body>
@@ -24,5 +103,6 @@
 <script src="../build/js/utils.js"></script>
 <!-- <script src="../build/js/index.js"></script> -->
 <!-- <script src="../build/js/main.js"></script> -->
+<script src="../build/js/proHub.js"></script>
 <script src="../build/js/map.js"></script>
 </html>

@@ -66,11 +66,11 @@ gulp.task('server', function() {
 });
 // 开发时的css处理
 gulp.task('devDistCss',function(){
-	gulp.src('static/less/*.less')
+	gulp.src('./static/less/*.less')
 			.pipe(sourcemaps.init())
 			.pipe(less())
 			.pipe(sourcemaps.write('lessmap'))
-			.pipe(gulp.dest('static/css'))
+			.pipe(gulp.dest('./build/css'))
 })
 // 开发时的js处理
 

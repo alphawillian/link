@@ -89,6 +89,8 @@ var utils = {
       citylocation.setComplete(function(result) {
           var pos = result.detail.latLng;
           console.log('tencentSuc')
+          latLng = result.detail.latLng
+          callback(latLng)
       });
       //请求失败回调函数                                                                             
       citylocation.setError(function() {
@@ -97,7 +99,23 @@ var utils = {
           console.log('tencentError')
       });
     }else if(environment == 'H5'){
-      latLng = _this.getLatLngH5(callback, failFn)
+      // latLng = _this.getLatLngH5(callback, failFn)
+      var citylocation = new qq.maps.CityService();
+      console.log('aa')
+      //请求成功回调函数
+      citylocation.setComplete(function(result) {
+          var pos = result.detail.latLng;
+          console.log('tencentSuc')
+          latLng = result.detail.latLng
+          // callback(latLng)
+      });
+      //请求失败回调函数                                                                             
+      citylocation.setError(function() {
+          // gps获取位置失败                        
+          var center = new qq.maps.LatLng(39.916527, 116.397128); // 故宫
+          console.log('tencentError')
+      });
+      citylocation.searchLocalCity();
     }
   },
   // H5获取地理位置
