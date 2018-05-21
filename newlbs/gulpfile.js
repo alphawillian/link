@@ -3,16 +3,12 @@ let fs = require('fs');
 let wrapper = require('gulp-wrapper');
 let browserSync = require('browser-sync');  //启动本地服务
 let gulpSequence = require('gulp-sequence');    //管理任务队列
-let sourcemaps = require('gulp-sourcemaps');    //sass的maps插件，方便定位sass
-let sass = require('gulp-sass');    //sass转css插件
+let sourcemaps = require('gulp-sourcemaps');    //less的maps插件，方便定位less
 let less = require('gulp-less');	//less转css插件
 
 let minifyCSS = require('gulp-clean-css'); //压缩css
 let uglify = require('gulp-uglify');    //压缩js
 let replace = require('gulp-replace');	//替换字符串
-
-let babel = require('gulp-babel');
-let browserify = require("browserify");
 
 let watcherCss = gulp.watch('static/less/*.less', ['devDistCss']);
 let watcherJs = gulp.watch('static/js/*.js',['devDistJs']);
@@ -79,20 +75,6 @@ gulp.task('devDistJs', function(){
 	.pipe(gulp.dest('build/js'))
 })
 
-
-gulp.task('devDistJs1',
-  gulpSequence(['es6'],['browser'])
-)
-gulp.task('es6', function(){
-	gulp.src('static/js/*.js')
-	.pipe(babel({
-		presets: ['es2015']
-	}))
-	.pipe(gulp.dest('build/js'))
-})
-gulp.task('browser', function(){
-	// browserify().add(['./static/js/server.js','./static/js/server1.js']).bundle().pipe(fs.createWriteStream('./build/js/main.js'))
-})
 // 开发时的html处理
 gulp.task('devDistHtml', function(){
 	gulp.src('views/*.html')
@@ -106,9 +88,7 @@ gulp.task('sass', function () {
 	.pipe(sourcemaps.write('css/maps'))
 	.pipe(gulp.dest('css'));
 });
-gulp.task('sass:watch', function () {
-  gulp.watch('./css/*.scss', ['sass']);
-});
+
 //压缩css
 gulp.task('miniCss', function(){
 	gulp.src(['css/**/*.css'])
@@ -173,22 +153,12 @@ gulp.task('destFile', function(){
 gulp.task('deleteBuild', function() {
   projectUtil.deleteDir('build');
 });
-//删除父级元素和develop统计目录的css js html 以便随后的压缩输出
-gulp.task('deleteParent', function() {
-	projectUtil.deleteDir('../css');
-	projectUtil.deleteDir('../html');
-	projectUtil.deleteDir('../js');
-});
 
 //功能样式完成之后压缩
 gulp.task('build', function(cb){
   gulpSequence('deleteBuild','miniCss', 'miniJs', cb);
 })
-// 文件输出到develop同级的文件 
-gulp.task('dest', function(cb){
-  gulpSequence('html','deleteParent','destFile', cb);
-})
-//开发时执行该命令 开发完成后需依次执行 gulp build 和 gulp dest 命令。
+
 gulp.task('dev',function(cb){
   gulpSequence('server', cb);
 })

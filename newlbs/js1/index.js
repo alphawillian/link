@@ -1,3 +1,11 @@
+/**
+ * Created by dandan on 2017/7/12.
+ * vision:1.0
+ * title:
+ * e-mail:sunchao5@jd.com
+ */
+
+// rem px换算
 ;
 (function() {
     $('body').on('touchmove', function(event) {
@@ -356,6 +364,16 @@
                 jmPage.dialogCoup.close();
             }
             $prev.remove();
+
+            var overlay = new CustomOverlay({
+                //pos: cenPos,
+                data: data,
+                clickFn: function(tar, obj) {
+                    var code;
+                    code = $(tar).attr('code');
+                    MapController.turnCoup(code);
+                }
+            });
             overlay.setMap(self.map);
             markerArr.push(overlay);
 
@@ -413,7 +431,7 @@
         },
 
         // 跳转优惠列表弹窗
-        getStoreDetail: function(code) {
+        turnCoup: function(code) {
             $(".cus-tag").removeClass(a);
             $('.cus-tag[code="' + code + '"]').addClass(a);
             jmPage.dialogStores.close();
@@ -531,8 +549,7 @@
                     currMarker.attr("data-storeCode",data[index].storeCode);
                     currMarker.on("click",function(){
                         var code = $(this).attr('data-storeCode');
-                        // MapController.turnCoup(code);
-                        MapController.getStoreDetail(code);
+                        MapController.turnCoup(code);
                     })
                 })
             },300)
@@ -543,6 +560,7 @@
     var pageController = {
         init: function() {
             this.pageInit();
+            this.setShare();
             // 执行滑动方法
             slideUD();
             slideCP();
@@ -552,24 +570,31 @@
             } else {
                 myScroll = new IScroll('.scrwrap', { preventDefault: false, });
             }
+            titleSco = new IScroll('.title', {
+                preventDefault: false,
+                scrollX: true,
+                scrollY: false,
+            });
         },
         pageInit: function() {
             var $title = $(".title");
             var defaultHeight = $('.dialog-stores').height();
 
-            $("body").on(c, '.store-list .storeItem', function() {
-                var code = $(this).attr('data-storeCode');
+            $("body").on(c, ".title li", function() {
+                $(this).addClass(a).siblings().removeClass(a);
+            }).on(c, 'li.store', function() {
+                var code = $(this).attr('code');
                 var storeLocation = {
                     latitude: $(this).attr('data-lat'),
-                    longitude: $(this).attr('data-lng'),
+                    longitude: $(this).attr('data-lon'),
                 }
-                // MapController.turnCoup(code);
-                MapController.getStoreDetail(code);
+                MapController.turnCoup(code);
                 MapController.storeCenter(storeLocation);
             }).on(c, '.coup-quan .info-r', function() {
                 var code = $(this).parent().attr('code');
                 var payPrizeId = $(this).parent().attr('payPrizeId');
                 var index = $(this).parent().index();
+                //pageController.checkLogin(code, payPrizeId, index);
                 if($(this).find('a').hasClass('willJump')){
                     location.href = "//home.jdpay.com/my/coupon/300/notused?source=JDSC";
                 }else{
@@ -621,19 +646,20 @@
             };
 
             // 填充商户数据                               
-            jmPage.fillMarker = function(data) {
-                var list = data.data;
+            jmPage.fillMarker = function(list) {
                 if(!list) return
                 var storeLocationArr = [];
                 jmPage.storeClusterFn(list);
                 var storeTemp = '';
                 var template = $("#storeTemplate").html();
-                var template = $("#storeListTemplate").html();
                 // 通过覆盖物来生成商户图标
                 // MapController.clearMarker();
                 console.log('返回的商户列表数：'+list.length)
-               
-                storeTemp = ejs.render(template, data)
+                for (var i = 0, len = list.length; i < len; i++) {
+                    var item = list[i];
+                    // MapController.createMarker(item);
+                    storeTemp += MapController.createStoreItem(item, template);
+                }
                 $('.store-list').html(storeTemp);
                 myScroll.refresh();
                 jmPage.proList = list;
@@ -651,6 +677,7 @@
 
         // 判断登录状态
         checkLogin: function(code, payPrizeId, index) {
+
             var loginUrl = "//passport.m.jd.com/user/login.action";
             if (!sid) {
                 // 当前页面地址
@@ -662,6 +689,15 @@
                 MapController.turnCoupInfo(code, payPrizeId, index);
             }
         },
+
+        setShare: function() {
+            window.share && window.share.setShare({
+                "title": "京东闪付尝鲜令",
+                "desc": "这些店每天无门槛立减6.6，爽不爽试了再说！",
+                "link": "https://lbspay.jd.com/merchantActivity/mainPage/default_cxl.do",
+                "imgUrl": "https://img30.360buyimg.com/jr_image/jfs/t11005/211/193727467/21541/7e3dcdc8/59e9c6aeN150ef65a.jpg"
+            })
+        }
     };
 
     $(function() {
@@ -741,6 +777,12 @@
         });
         jmPage.showStatus = function(state) {
             storeStaus = state;
+            //通过state来改变底部滑动栏
+            if(state){
+                $('.varyBar').removeClass('varyBar-text').addClass('varyBar-icon');
+            }else{
+                $('.varyBar').removeClass('varyBar-icon').addClass('varyBar-text');
+            }
             //通过state来改变底部滑动栏 结束
             $('.dialog-stores').addClass('animateT').css('height', storeHgtArr[state]);
             setTimeout(function() {

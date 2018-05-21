@@ -1,108 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no ">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="../build/css/index.css">
-  <title>新版猎户地图</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1.0,user-scalable=no">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta charset="utf-8">
+	<title>新版优惠地图</title>
+	<link rel="icon" href="//www.jd.com/favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="//static.360buyimg.com/finance/mobile/base/cm/1.0.0/reset.css">
+	<link rel="stylesheet" href="//static.360buyimg.com/finance/mobile/base/jmcom/1.0.0/css/??common/common.100.css,coms/jdloading.100.css,coms/toast.100.css,coms/showDialog.100.css"/>
+	<link rel="stylesheet" href="../libs/css/oldIndex.css" />
+	<link rel="stylesheet" href="../build/css/index.css" />
 </head>
+
 <body>
-  <div class="container">
-    <div id="map"></div>
-    <div class="storeDialog slideUp">
-      <div class="slideBar"><i></i></div>
-      <div class="storeContent">
-        <div class="block storeBase">
-          <span class="storeBase_left">
-            <img src="../static/images/shanghuLogo.png" alt="" class="storeLogo">
-          </span>
-          <span class="storeBase_middle">
-            <div class="storeName">屈臣氏(亦庄经济开发区店)</div>
-            <div class="storeSupport">
-              <span>支持</span><span class="supportItem">京东付款码</span><span class="supportItem">京东闪付</span>
-            </div>
-            <span class="storeCoupon_base">
-              <span class="couponBaseList">
-                <span class="item jiang">
-                  <span class="itemDes">奖</span>
-                  <span class="itemTxt">消费赢免单</span>
-                </span>
-                <span class="item cu">
-                  <span class="itemDes">促</span>
-                  <span class="itemTxt">满10减5元</span>
-                </span>
-                <span class="item jiang">
-                  <span class="itemDes">奖</span>
-                  <span class="itemTxt">消费赢免单</span>
-                </span>
-                <span class="item cu">
-                  <span class="itemDes">促</span>
-                  <span class="itemTxt">满10减5元</span>
-                </span>
-              </span>
-            </span>
-          </span>
-          <span class="storeBase_right">
-            <div class="storeDistance"><span class="distanceNum">0.76</span><span class="distanceSign">km</span> </div>
-            <div class="storeActivity"><img src="../static/images/detail_hongbao.png" alt="" srcset=""> </div>
-          </span>
-        </div>
-        <div class="block storeAddress">
-          <span class="addressTxt">北京市大兴区亦庄经济开发区科创十一街 京东集团A座</span>
-          <span class="addressNavigation"><i></i></span>
-        </div>
-        <div class="block storeCoupon">
-          <span class="coupon type_hongbao">
-            <div class="top">
-              <div class="hongbaoTxt">百万红包等你拿</div>
-            </div>
-            <div class="bottom">
-              <span class="choujiang">抽奖</span>
-            </div>
-          </span>
-          <span class="coupon type_qiang">
-            <div class="top">
-              <span class="typeSign"><span>抢</span></span>
-              <div class="detailIcon"></div>
-              <div class="priceLine"><span class="priceNum">20</span><span class="priceSign">元</span></div>
-              <div class="nameLine">京东闪付优惠券</div>
-              <div class="progressLine"><span class="bar"><div class="barIn"></div></span></div>
-            </div>
-            <div class="bottom">
-              <span class="lingqu">立即领取</span>
-            </div>
-          </span>
-          <span class="coupon type_yiling">
-            <div class="top">
-              <div class="detailIcon"></div>
-              <div class="priceLine"><span class="priceNum">20</span><span class="priceSign">元</span></div>
-              <div class="nameLine">京东闪付优惠券</div>
-              <div class="descLine">满100元可用</div>
-            </div>
-            <div class="bottom">
-              <span class="shiyong">立即使用</span>
-            </div>
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-  
+	<div class="page">
+		<div class="scale-mask abs-lb hidden"></div>
+		<div class="box abs-lt" id="map"></div>
+		<div class="backCenter"></div>
+	</div>
+	<!-- 优惠商家 -->
+	<div class="dialog-coup dialog slide slideDown hidden">
+		<div class="mask"></div>
+		<div class="content">
+			<div class="infoScro">
+				<i></i>
+			</div>
+			<div class="storeContent"></div>
+		</div>
+	</div>
+	<!-- 优惠商家 end-->
+	<div class="dialog-stores dialog slide slideDown hidden">
+		<div class="mask"></div>
+		<div class="content">
+			<div class="slide-bar clickCount" data-key="LHDT_ckfjsh">
+				<!-- <i class="hidden slide-barIcon"></i>
+				<span class="hidden slider-barText">附近有<span id="storeNum"></span>家优惠商户</span> -->
+				<div class="iconBar"><i></i></div>
+				<div class="titleLine"><span>附近<span class="storeNum">32</span>家优惠商户</span></div>
+			</div>
+			<div class="scrwrap">
+				<ul class="store-list clearfix"></ul>
+			</div>
+		</div>
+	</div>
 
-  
-  
+	<script src="//static.360buyimg.com/finance/mobile/base/??jm/js/lib/zepto-1.2.0.js,1.0.0/js/lib/fastclick.js "></script>
+	<!-- <script src="https//3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js "></script> -->
+	<script type="text/javascript" src="https://3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js?t=teshuchuli"></script>
+	<script charset="utf-8 " src="https://map.qq.com/api/js?v=2.exp&libraries=geometry&key=42DBZ-MDEK3-IKS3Q-3MI6O-YN2EE-NJFSL"></script>
+	<script src="//static.360buyimg.com/finance/mobile/base/jm/1.0.0/js/jm.js "></script>
+	<script src="//static.360buyimg.com/finance/mobile/base/jmcom/1.0.0/js/??dist/tools/1.0.0/tools.js,dist/jdloading/1.0.0/jdloading.js,dist/toast/1.0.0/toast.js,dist/showDialog/1.0.0/showDialog.js "></script>
+	<script src="../libs/js/iscroll.js"></script>
+	<script src="../libs/js/tools.js "></script>
+	<script src="../libs/js/ejs.min.js"></script>
+	<script src="../build/js/proHub.js "></script>
+	<script src="../build/js/index.js"></script>
+	<script src="../build/js/extend.js"></script>
+	<script type="text/template" id="storeListTemplate">
+	<% for(var i = 0; i < (data.length)+10; i++){ %>
+		<% var item = data[0] %>
+		<div class="storeItem" data-storeCode="<%= item.storeCode %>" data-lat="<%= item.latitude %>" data-lng="<%= item.longitude %>">
+			<div class="item_left">
+				<div class="nameLine">
+					<span class="name"><%= item.name %></span>
+					<span class="activityList">
+						<% for (var n = 0; n < item.preferenceActivities.length; n++){ %>
+							<% var activityItem = item.preferenceActivities[n] %>
+								<% if(activityItem == 0){ %>
+						<span class="activityItem type_jiang">奖</span>
+								<% } %>
+								<% if(activityItem == 1){ %>
+						<span class="activityItem type_cu">促</span>
+								<% } %>
+								<% if(activityItem == 2){ %>
+						<span class="activityItem type_qiang">抢</span>
+								<% } %>
+						<% } %>
+					</span>
+				</div>
+				<div class="supportLine">
+					<span class="supportDesc">支持</span>
+					<span class="supportList">
+						<% for(var m = 0; m < item.payWays.length; m++){ %>
+							<% var payWayItem = item.payWays[m] %>
+								<% if(payWayItem == 0){ %>
+						<span class="supportItem">京东支付</span>
+								<% } %>
+								<% if(payWayItem == 1){ %>
+						<span class="supportItem">京东付款码</span>
+								<% } %>
+								<% if(payWayItem == 2){ %>
+						<span class="supportItem flashPay_apple">京东闪付(<span class="payLogo"></span>)</span>
+								<% } %>
+						<% } %>
+					</span>
+				</div>
+			</div>
+			<div class="item_right">
+				<div class="storeDistance"><span class="distanceNum">0.76</span><span class="distanceSign">km</span> </div>
+				<div class="storeActivity"><img src="../static/images/list_hongbao.png" alt="" srcset=""></div>
+			</div>
+		</div>
+	<% } %>
+	</script>
+	<script type="text/template" id="storeDetailTemplate">
+		<div class="storeDetail" data-storeCode="<%= storeCode %>">
+			<div class="block storeBase">
+				<span class="storeBase_left">
+					<img src="<%= logoAddress %>" alt="" class="storeLogo">
+				</span>
+				<span class="storeBase_middle">
+					<div class="storeNameTxt"><%= name %></div>
+					<div class="storeSupport">
+						<span>支持</span>
+						<% for(var i = 0; i < payWays.length; i++ ){ %>
+							<% var payWaysItem = payWays[i] %>
+								<% if(payWaysItem == 0){ %>
+						<span class="supportItem">京东支付</span>
+								<% } %>
+								<% if(payWaysItem == 1){ %>
+						<span class="supportItem">京东付款码</span>
+								<% } %>
+								<% if(payWaysItem == 2){ %>
+						<span class="supportItem">京东闪付</span>
+								<% } %>
+						<% } %>
+					</div>
+					<span class="storeCoupon_base">
+						<% if(preferenceActivities.length > 0){ %>
+						<span class="couponBaseList">
+							<% for(var j = 0; j < preferenceActivities.length; j++){ %>
+								<% var activityItem = preferenceActivities[j]%>
+								<% if(activityItem.mktActType == 1){ %>
+							<span class="item cu">
+								<span class="itemDes">促</span>
+								<span class="itemTxt"><%= activityItem.copyWriter %></span>
+							</span>
+								<% } %>
+								<% if(activityItem.mktActType == 2){ %>
+							<span class="item qiang">
+								<span class="itemDes">抢</span>
+								<span class="itemTxt"><%= activityItem.copyWriter %></span>
+							</span>
+								<% } %>
+								<% if(activityItem.mktActType == 3){ %>
+							<span class="item jiang">
+								<span class="itemDes">奖</span>
+								<span class="itemTxt"><%= activityItem.copyWriter %></span>
+							</span>
+								<% } %>
+							<% } %>
+						</span>
+						<% } %>
+					</span>
+				</span>
+				<span class="storeBase_right">
+					<div class="storeDistance"><span class="distanceNum">0.76</span><span class="distanceSign">km</span> </div>
+					<div class="storeActivity"><img src="../static/images/detail_hongbao.png" alt="" srcset=""> </div>
+				</span>
+			</div>
+			<div class="block storeAddress">
+				<span class="addressTxt"><%= address %></span>
+				<span class="addressNavigation"><i></i></span>
+			</div>
+			<div class="block storeCoupon">
+				<% if(marketingActivities.length > 0){ %>
+				<div class="couponList">
+					<% for(var m = 0; m < marketingActivities.length; m++){ %>
+						<% var mktActivityItem = marketingActivities[m] %>
+						<% if(mktActivityItem.styleType == "1"){ %>
+					<span class="coupon type_hongbao" data-entranceId="<%= mktActivityItem.entranceId %>" >
+						<div class="top">
+							<div class="hongbaoTxt"><%= mktActivityItem.prizeDesc %></div>
+						</div>
+						<div class="bottom">
+							<span class="choujiang">抽奖</span>
+						</div>
+					</span>
+						<% } %>
+						<% if(mktActivityItem.styleType == "2"){ %>
+							<% var count = Number( mktActivityItem.payCount );
+								var limit = Number( mktActivityItem.payCountLimit );
+								var width = (count/limit)*100+"%";
+							%>
+					<span class="coupon type_qiang">
+						<div class="top">
+							<span class="typeSign"><span>抢</span></span>
+							<div class="detailIcon"></div>
+							<div class="priceLine"><span class="priceNum"><%= mktActivityItem.prizeAmount %></span><span class="priceSign">元</span></div>
+							<div class="nameLine"><%= mktActivityItem.prizeName %></div>
+							<div class="progressLine"><span class="barIn" style="width: <%= width %>"></span><span class="bar"></span></div>
+						</div>
+						<div class="bottom">
+							<span class="lingqu">立即领取</span>
+						</div>
+					</span>
+						<% } %>
+						<% if(mktActivityItem.styleType == "3"){ %>
+					<span class="coupon type_yiling">
+						<div class="top">
+							<div class="detailIcon"></div>
+							<div class="priceLine"><span class="priceNum">20</span><span class="priceSign">元</span></div>
+							<div class="nameLine">京东闪付优惠券</div>
+							<div class="descLine">满100元可用</div>
+						</div>
+						<div class="bottom">
+							<span class="shiyong">立即使用</span>
+						</div>
+					</span>
+						<% } %>
+					<% } %>
+				</div>
+				<% } %>
+			</div>
+		</div>
+	</script>
+	<script src="../libs/js/consoleInfo.js"></script>
 </body>
-<script src="../libs/js/consoleInfo.js"></script>
-<script src="../libs/js/jquery-3.3.1.min.js"></script>
-<script src="../libs/js/jdjssdk.min.js"></script>
-<script src="../libs/js/jdjr-bridge.js"></script>
-<script src="../libs/js/weixin-1.2.0.js"></script>
 
-<script charset="utf-8 " src="https://map.qq.com/api/js?v=2.exp&libraries=geometry&key=42DBZ-MDEK3-IKS3Q-3MI6O-YN2EE-NJFSL"></script>
-<script src="../build/js/utils.js"></script>
-<!-- <script src="../build/js/index.js"></script> -->
-<!-- <script src="../build/js/main.js"></script> -->
-<script src="../build/js/proHub.js"></script>
-<script src="../build/js/map.js"></script>
 </html>

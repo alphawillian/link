@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta charset="utf-8">
+    <title>优惠地图</title>
+    <link rel="icon" href="//www.jd.com/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="//static.360buyimg.com/finance/mobile/base/cm/1.0.0/reset.css">
+    <link rel="stylesheet" href="//static.360buyimg.com/finance/mobile/base/jmcom/1.0.0/css/??common/common.100.css,coms/jdloading.100.css,coms/toast.100.css,coms/showDialog.100.css"
+    />
+    <link rel="stylesheet" href="../libs/css/oldIndex.css" />
+    <link rel="stylesheet" href="../build/css/index.css" />
+</head>
+
+<body>
+
+    <div class="page">
+        <div class="scale-mask abs-lb hidden"></div>
+        <div class="title pr clickCount" data-key="LHDT_title">
+            <ul>
+
+            </ul>
+
+        </div>
+        <div class="box abs-lt" id="map"></div>
+        <div class="backCenter"></div>
+    </div>
+    <!-- 优惠商家 -->
+    <div class="dialog-coup dialog slide slideDown hidden">
+        <div class="mask"></div>
+        <div class="content coupList">
+            <div class="infoScro">
+                <i></i>
+            </div>
+            <div class="pro-info">
+                <div class="icon-box abs-lm">
+                    <img class="abs-mm" alt="">
+                </div>
+                <div class="info abs-lm">
+                    <h4></h4>
+                    <p>
+                        <span class="span1"></span>
+                    </p>
+                    <h6></h6>
+                </div>
+                <div class="go-nav abs-rm ">
+                    <p class="ta-c abs-mm">到这去</p>
+                </div>
+            </div>
+            <div class="coup-box">
+                <div class="coup-content">
+                    <ul class="lotteryList-wrap">
+                        <li class="lotteryList-get hide"></li>
+                        <li class="lotteryList-success hide"></li>
+                        <li class="lotteryList-fail hide"></li>
+                    </ul>
+                    <ul class="quanCoupList-wrap">
+
+                    </ul>
+                    <ul class="jianCoupList-wrap">
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- 优惠商家 end-->
+    <div class="dialog-stores dialog slide slideDown hidden varyBar varyBar-text">
+        <div class="mask"></div>
+        <div class="content">
+            <div class="slide-bar clickCount" data-key="LHDT_ckfjsh">
+                <i class="hidden slide-barIcon"></i>
+                <!-- <span class="hidden slider-barText">附近有<span id="storeNum"></span>家优惠商户</span> -->
+                <span class="hidden slider-barText">查看附近优惠商户</span>
+            </div>
+            <div class="scrwrap">
+                <ul class="store-list clearfix">
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="//static.360buyimg.com/finance/mobile/base/??jm/js/lib/zepto-1.2.0.js,1.0.0/js/lib/fastclick.js "></script>
+    <!-- <script src="https//3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js "></script> -->
+    <script type="text/javascript" src="https://3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js?t=teshuchuli"></script>
+    <script charset="utf-8 " src="https://map.qq.com/api/js?v=2.exp&libraries=geometry&key=42DBZ-MDEK3-IKS3Q-3MI6O-YN2EE-NJFSL"></script>
+    <script src="//static.360buyimg.com/finance/mobile/base/jm/1.0.0/js/jm.js "></script>
+    <script src="//static.360buyimg.com/finance/mobile/base/jmcom/1.0.0/js/??dist/tools/1.0.0/tools.js,dist/jdloading/1.0.0/jdloading.js,dist/toast/1.0.0/toast.js,dist/showDialog/1.0.0/showDialog.js "></script>
+    <script src="../libs/js/iscroll.js"></script>
+    <script src="../libs/js/tools.js "></script>
+    <script src="../build/js/proHub.js "></script>
+    <script src="../build/js/index.js"></script>
+    <script src="../build/js/extend.js"></script>
+    <script type="text/template" id="storeTemplate">
+        <li class="store  clearfix" code="{storeCode}" data-lat="{latitude}" data-lon="{longitude}">
+            <div class="icon-box">
+                <img src="{logoAddress}" class="abs-mm" alt="商家图标 ">
+            </div>
+            <div class="store-info">
+                <h3>{realName}</h3>
+                <p>
+                    <span class="instance">{distance}km </span>
+                    <span class="type">{unitPay}</span>
+                </p>
+            </div>
+            <div class="store-coup {hide}">
+                <span class="coup-info">{remark}</span>
+            </div>
+        </li>
+    </script>
+    <script type="text/template" id="quanTemplate">
+        <li class="cou-info coup-quan" code="{storeCode}" payPrizeId="{payPrizeId}">
+            <img src="{fullLogoAddress}" alt="">
+            <img class="flag icon_lingqu {lingqu_hide} " src="http://img30.360buyimg.com/jr_image/jfs/t11263/109/77900276/10396/6c8692da/59e72546Ne1abf110.png"
+                alt="图标">
+            <img class="flag icon_qiangguang {qiangguang_hide}" src="//img30.360buyimg.com/jr_image/jfs/t16378/190/2164728003/4858/8597046a/5a93ef5cN3a62d1bd.png"
+                alt="图标">
+            <img class="flag icon_chaoxian {chaoxian_hide}" src="//img30.360buyimg.com/jr_image/jfs/t14881/60/2325986733/5013/95e8fe4c/5a93ef5cN0bcf349c.png"
+                alt="图标">
+            <div class="info-l abs-lt">
+                <div class="abs-lm">
+                    <h6>
+                        <span>{content}</span>
+                    </h6>
+                    <!-- <h6><span></span><i class="moreInfo"></i></h6> -->
+                </div>
+            </div>
+            <div class="info-r abs-rt">
+                <div class="abs-mm">
+                    <h4>
+                        <span>{couponAmount}</span>元</h4>
+                    <a class="{geted} {willJump}">{couponLimit}</a>
+                </div>
+            </div>
+        </li>
+    </script>
+    <script type="text/template" id="lotteryTemplate_success">
+        <div class="redCoup useRedCoup redCoupType1">
+            <div class="coupInfo_left">
+                <div class="amount">
+                    <span class="amountNum_yuan">{prizeAmount_yuan}</span>
+                    <span class="amountNum_fen">{prizeAmount_fenDot}</span>
+                    <span class="amountSign">元</span>
+                </div>
+                <div class="amountLimit">{prizeDesc}</div>
+            </div>
+            <div class="coupInfo_middle">
+                <div class="coupInfoLine coupInfoLine1">{prizeName}</div>
+                <div class="coupInfoLine coupInfoLine2">{usingDesc}</div>
+                <div class="coupInfoLine coupInfoLine3">{validDate}</div>
+            </div>
+            <div class="coupInfo_right">
+                <a class="coupUse" href="//home.jdpay.com/my/coupon/300/notused?source=JDSC">
+                    <div>查</div>
+                    <div>看</div>
+                </a>
+            </div>
+        </div>
+    </script>
+    <script type="text/template" id="lotteryTemplate_get">
+        <div class="redCoup getRedCoup " data-code="{storeCode}" data-prizeId="{payPrizeId}">
+            <img src="//img30.360buyimg.com/jr_image/jfs/t18169/16/1903030095/59805/350cd694/5adf4025N25c173e3.png" alt="">
+        </div>
+    </script>
+    <script type="text/template" id="lotteryTemplate_fail">
+        <div class="redCoup failRedCoup ">
+            <div class="failRedCoup_txt">很遗憾，再接再厉</div>
+        </div>
+    </script>
+    <script type="text/template" id="jianTemplate">
+        <div class="cou-info coup-jian" code="{storeCode}" payPrizeId="{payPrizeId}">
+            <img src="{randomLogoAddress}" alt="">
+            <div class="info-l abs-lt">
+                <div class="abs-lm">
+                    <h6>
+                        <span>{content}</span>
+                    </h6>
+                    <p></p>
+                </div>
+            </div>
+            <div class="info-r abs-rt">
+                <div class="abs-mm">
+                    <h4>
+                        <span>{couponAmount}</span>元</h4>
+                    <p>{couponLimit}</p>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script src="../js/consoleInfo.js"></script>
+</body>
+
+</html>

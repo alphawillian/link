@@ -32,6 +32,9 @@ body {
   height: 100vh;
   position: relative;
 }
+.container .hide {
+  display: none;
+}
 .container #map {
   width: 100%;
   height: 100%;
@@ -43,12 +46,15 @@ body {
   background: white;
 }
 .container .storeDialog .slideBar {
+  box-shadow: 0 -1px 4px 1px #eee;
+}
+.container .storeDialog .iconBar {
   width: 100%;
   height: 0.25rem;
   border-bottom: 1px solid #E7E8E7;
   text-align: center;
 }
-.container .storeDialog .slideBar i {
+.container .storeDialog .iconBar i {
   display: inline-block;
   width: 0.5rem;
   height: 0.05rem;
@@ -82,7 +88,7 @@ body {
   width: 2.2rem;
   margin-top: 5px;
 }
-.container .storeDialog .storeContent .storeBase .storeBase_middle .storeName {
+.container .storeDialog .storeContent .storeBase .storeBase_middle .storeNameTxt {
   font-size: 0.14rem;
   color: #333333;
 }
@@ -196,7 +202,16 @@ body {
 .container .storeDialog .storeContent .storeCoupon {
   padding-top: 0.12rem;
   padding-bottom: 0.12rem;
+  overflow: hidden;
+  font-size: 0;
+}
+.container .storeDialog .storeContent .storeCoupon .couponList {
+  white-space: nowrap;
+  height: 0.9rem;
   overflow: scroll;
+}
+.container .storeDialog .storeContent .storeCoupon .couponList::-webkit-scrollbar {
+  display: none;
 }
 .container .storeDialog .storeContent .storeCoupon .coupon {
   display: inline-block;
@@ -206,6 +221,7 @@ body {
   text-align: center;
   border-radius: 4px;
   overflow: hidden;
+  margin-right: 0.06rem;
 }
 .container .storeDialog .storeContent .storeCoupon .coupon .top {
   width: 100%;
@@ -217,10 +233,9 @@ body {
 .container .storeDialog .storeContent .storeCoupon .coupon .bottom {
   width: 100%;
   height: 0.28rem;
-  line-height: 0.28rem;
+  line-height: 0.3rem;
   font-size: 0.12rem;
   color: white;
-  background: red;
 }
 .container .storeDialog .storeContent .storeCoupon .coupon.type_hongbao {
   background-image: url("../../static/images/quan_bg_hongbao.png");
@@ -235,6 +250,7 @@ body {
   display: inline-block;
   margin-top: 0.28rem;
   max-width: 0.4rem;
+  white-space: normal;
 }
 .container .storeDialog .storeContent .storeCoupon .coupon.type_qiang .top .typeSign,
 .container .storeDialog .storeContent .storeCoupon .coupon.type_yiling .top .typeSign {
@@ -250,6 +266,7 @@ body {
 .container .storeDialog .storeContent .storeCoupon .coupon.type_qiang .top .typeSign span,
 .container .storeDialog .storeContent .storeCoupon .coupon.type_yiling .top .typeSign span {
   display: inline-block;
+  font-size: 0.12rem;
   text-align: center;
   color: white;
   position: absolute;
@@ -292,12 +309,642 @@ body {
 .container .storeDialog .storeContent .storeCoupon .coupon.type_yiling .top .descLine {
   color: #999999;
 }
-.container .storeDialog .storeContent .storeCoupon .coupon.type_qiang .top .progerssLine .bar {
-  display: inline-block;
+.container .storeDialog .storeContent .storeCoupon .coupon.type_qiang .top .progressLine {
   width: 0.89rem;
   height: 0.05rem;
+  margin: 0.05rem auto 0 auto;
+  position: relative;
+  border-radius: 0.025rem;
+  overflow: hidden;
+}
+.container .storeDialog .storeContent .storeCoupon .coupon.type_qiang .top .progressLine .bar {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
   background-image: url("../../static/images/jindutiao_bg.png");
   background-size: 100% 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.container .storeDialog .storeContent .storeCoupon .coupon.type_qiang .top .progressLine .barIn {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #E53D35;
+  border-radius: 0.025rem;
+  width: 50%;
+}
+.container .storeDialog .storeContent .storeCoupon .coupon.type_qiang .bottom .lingqu {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.18rem;
+  line-height: 0.19rem;
+  text-align: center;
+  background-color: #E53D35;
+  border-radius: 0.09rem;
+}
+.container .storeDialog .storeContent .storeCoupon .coupon.type_yiling .bottom .shiyong {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.18rem;
+  line-height: 0.19rem;
+  color: #E53D35;
+  border: 1px solid #E53D35;
+  border-radius: 0.09rem;
+}
+.container .storeListDialog {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  color: #333333;
+}
+.container .storeListDialog.hide .storeList,
+.container .storeListDialog.slideUp .storeList {
+  height: 0;
+}
+.container .storeListDialog.halfScreen {
+  max-height: 50vh;
+  overflow: hidden;
+}
+.container .storeListDialog.halfScreen .storeList {
+  height: unset;
+}
+.container .storeListDialog .slideBar {
+  box-shadow: 0 -1px 4px 1px #eee;
+}
+.container .storeListDialog .slideBar .iconBar {
+  width: 100%;
+  height: 0.25rem;
+  text-align: center;
+}
+.container .storeListDialog .slideBar .iconBar i {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.05rem;
+  background: #E7E8E7;
+  border-radius: 0.025rem;
+  position: relative;
+  top: 0.02rem;
+}
+.container .storeListDialog .slideBar .titleLine {
+  height: 0.35rem;
+  line-height: 0.25rem;
+  font-size: 0.16rem;
+  text-align: center;
+}
+.container .storeListDialog .slideBar .titleLine .storeNum {
+  text-align: center;
+  color: #E12219;
+}
+.container .storeListDialog .storeList {
+  width: 100%;
+  overflow: scroll;
+}
+.container .storeListDialog .storeList .storeItem {
+  padding: 0.15rem 0.2rem;
+  border-top: 1px solid #E4E5E4;
+  font-size: 0;
+}
+.container .storeListDialog .storeList .storeItem .item_left {
+  vertical-align: top;
+  display: inline-block;
+  width: 2.73rem;
+}
+.container .storeListDialog .storeList .storeItem .item_left .nameLine {
+  font-size: 0.14rem;
+}
+.container .storeListDialog .storeList .storeItem .item_left .nameLine .name {
+  color: #333333;
+}
+.container .storeListDialog .storeList .storeItem .item_left .nameLine .activityList {
+  vertical-align: text-top;
+  font-size: 0.1rem;
+  color: white;
+}
+.container .storeListDialog .storeList .storeItem .item_left .nameLine .activityList .activityItem {
+  display: inline-block;
+  width: 0.17rem;
+  height: 0.17rem;
+  line-height: 0.18rem;
+  text-align: center;
+  border-radius: 50%;
+  margin-left: 0.01rem;
+  position: relative;
+  top: 1px;
+}
+.container .storeListDialog .storeList .storeItem .item_left .nameLine .activityList .activityItem.type_jiang {
+  background-color: #d6025c;
+}
+.container .storeListDialog .storeList .storeItem .item_left .nameLine .activityList .activityItem.type_cu {
+  background-color: #F68902;
+}
+.container .storeListDialog .storeList .storeItem .item_left .nameLine .activityList .activityItem.type_qiang {
+  background-color: #359ED1;
+}
+.container .storeListDialog .storeList .storeItem .item_left .supportLine {
+  margin-top: 0.04rem;
+  font-size: 0.12rem;
+  color: #999999;
+}
+.container .storeListDialog .storeList .storeItem .item_left .supportLine .supportList {
+  font-size: 0.1rem;
+}
+.container .storeListDialog .storeList .storeItem .item_left .supportLine .supportList .supportItem {
+  border: 1px solid #999999;
+  padding: 3px 2px 1px 2px;
+  border-radius: 2px;
+}
+.container .storeListDialog .storeList .storeItem .item_left .supportLine .supportList .supportItem.flashPay_apple .payLogo {
+  display: inline-block;
+  width: 0.25rem;
+  height: 0.12rem;
+  background-image: url("../../static/images/paylogo_apple.png");
+  background-size: 100% 100%;
+  position: relative;
+  top: 0.03rem;
+  margin: 0 2px;
+}
+.container .storeListDialog .storeList .storeItem .item_left .supportLine .supportList .supportItem.flashPay_huawei .payLogo {
+  display: inline-block;
+  width: 0.25rem;
+  height: 0.12rem;
+  background-image: url("../../static/images/paylogo_huawei.png");
+  background-size: 100% 100%;
+  position: relative;
+  top: 0.03rem;
+  margin: 0 2px;
+}
+.container .storeListDialog .storeList .storeItem .item_left .supportLine .supportList .supportItem.flashPay_samsung .payLogo {
+  display: inline-block;
+  width: 0.57rem;
+  height: 0.12rem;
+  background-image: url("../../static/images/paylogo_samsung.png");
+  background-size: 100% 100%;
+  position: relative;
+  top: 0.035rem;
+  margin: 0 2px;
+}
+.container .storeListDialog .storeList .storeItem .item_right {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  width: 0.6rem;
+  font-size: 0;
+}
+.container .storeListDialog .storeList .storeItem .item_right .storeDistance {
+  font-size: 0.12rem;
+  text-align: center;
+}
+.container .storeListDialog .storeList .storeItem .item_right .storeDistance .distanceSign {
+  margin-left: 5px;
+}
+.container .storeListDialog .storeList .storeItem .item_right .storeActivity {
+  text-align: center;
+  margin-top: 0.06rem;
+}
+.container .storeListDialog .storeList .storeItem .item_right .storeActivity img {
+  width: 0.17rem;
+  height: 0.22rem;
+}
+.dialog-coup .storeContent {
+  width: 100%;
+}
+.dialog-coup .storeContent .block {
+  border-bottom: 1px solid #E7E8E7;
+  padding: 0 0.2rem;
+}
+.dialog-coup .storeContent .storeBase {
+  padding-top: 0.1rem;
+  padding-bottom: 0.15rem;
+}
+.dialog-coup .storeContent .storeBase .storeBase_left {
+  display: inline-block;
+  margin-right: 0.08rem;
+  vertical-align: top;
+}
+.dialog-coup .storeContent .storeBase .storeBase_left .storeLogo {
+  width: 0.45rem;
+  height: 0.45rem;
+}
+.dialog-coup .storeContent .storeBase .storeBase_middle {
+  display: inline-block;
+  width: 2.2rem;
+  margin-top: 5px;
+}
+.dialog-coup .storeContent .storeBase .storeBase_middle .storeNameTxt {
+  font-size: 0.14rem;
+  color: #333333;
+}
+.dialog-coup .storeContent .storeBase .storeBase_middle .storeSupport {
+  font-size: 0.12rem;
+  color: #999999;
+  margin-top: 0.08rem;
+  margin-bottom: 0.11rem;
+}
+.dialog-coup .storeContent .storeBase .storeBase_middle .storeSupport .supportItem {
+  font-size: 0.1rem;
+  height: 0.17rem;
+  line-height: 0.17rem;
+  border: 1px solid #999999;
+  border-radius: 3px;
+  padding: 0 3px;
+  margin-left: 4px;
+}
+.dialog-coup .storeContent .storeBase .storeBase_middle .storeCoupon_base .couponBaseList .item {
+  white-space: nowrap;
+  height: 0.18rem;
+  line-height: 0.18rem;
+  padding: 0 2px 0 0;
+  position: relative;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+.dialog-coup .storeContent .storeBase .storeBase_middle .storeCoupon_base .couponBaseList .item .itemDes {
+  display: inline-block;
+  text-align: center;
+  width: 0.17rem;
+  height: 0.17rem;
+  color: white;
+}
+.dialog-coup .storeContent .storeBase .storeBase_middle .storeCoupon_base .couponBaseList .item.jiang {
+  border: 1px solid #D5045B;
+  border-radius: 0.9rem;
+}
+.dialog-coup .storeContent .storeBase .storeBase_middle .storeCoupon_base .couponBaseList .item.jiang .itemDes {
+  background: #D5045B;
+  border-radius: 50%;
+}
+.dialog-coup .storeContent .storeBase .storeBase_middle .storeCoupon_base .couponBaseList .item.cu {
+  border: 1px solid #F68902;
+  border-radius: 0.9rem;
+}
+.dialog-coup .storeContent .storeBase .storeBase_middle .storeCoupon_base .couponBaseList .item.cu .itemDes {
+  background: #F68902;
+  border-radius: 50%;
+}
+.dialog-coup .storeContent .storeBase .storeBase_middle .storeCoupon_base .couponBaseList .item.qiang {
+  border: 1px solid #319fd2;
+  border-radius: 0.9rem;
+}
+.dialog-coup .storeContent .storeBase .storeBase_middle .storeCoupon_base .couponBaseList .item.qiang .itemDes {
+  background: #319fd2;
+  border-radius: 50%;
+}
+.dialog-coup .storeContent .storeBase .storeBase_right {
+  display: inline-block;
+  margin-top: 5px;
+  float: right;
+  font-size: 0.14rem;
+  color: #333333;
+  text-align: right;
+}
+.dialog-coup .storeContent .storeBase .storeBase_right .storeActivity {
+  text-align: center;
+}
+.dialog-coup .storeContent .storeBase .storeBase_right .storeActivity img {
+  display: inline-block;
+  width: 0.27rem;
+  height: 0.26rem;
+}
+.dialog-coup .storeContent .storeAddress {
+  padding: 0.08rem 0.25rem;
+  padding-left: 0.4rem;
+  position: relative;
+}
+.dialog-coup .storeContent .storeAddress .addressTxt {
+  display: inline-block;
+  max-width: 2.2rem;
+  font-size: 0.12rem;
+  color: #333333;
+}
+.dialog-coup .storeContent .storeAddress .addressTxt::before {
+  content: "";
+  width: 0.1rem;
+  height: 0.14rem;
+  background-image: url("../../static/images/dingwei.png");
+  background-size: 100% 100%;
+  vertical-align: top;
+  position: absolute;
+  top: 0.1rem;
+  left: 0.25rem;
+}
+.dialog-coup .storeContent .storeAddress .addressNavigation {
+  display: inline-block;
+  width: 0.225rem;
+  height: 0.225rem;
+  background-color: #EDEEED;
+  float: right;
+  text-align: center;
+  border-radius: 4px;
+  position: absolute;
+  top: 50%;
+  right: 0.25rem;
+  transform: translateY(-50%);
+}
+.dialog-coup .storeContent .storeAddress .addressNavigation i {
+  display: inline-block;
+  width: 0.16rem;
+  height: 0.16rem;
+  background-image: url("../../static/images/daohang.png");
+  background-size: 100% 100%;
+  margin-top: 0.03rem;
+}
+.dialog-coup .storeContent .storeCoupon {
+  padding-top: 0.12rem;
+  padding-bottom: 0.12rem;
+  overflow: hidden;
+  font-size: 0;
+}
+.dialog-coup .storeContent .storeCoupon .couponList {
+  white-space: nowrap;
+  height: 0.9rem;
+  overflow: scroll;
+}
+.dialog-coup .storeContent .storeCoupon .couponList::-webkit-scrollbar {
+  display: none;
+}
+.dialog-coup .storeContent .storeCoupon .coupon {
+  display: inline-block;
+  width: 1.08rem;
+  height: 0.9rem;
+  font-size: 0;
+  text-align: center;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-right: 0.06rem;
+}
+.dialog-coup .storeContent .storeCoupon .coupon .top {
+  width: 100%;
+  height: 0.62rem;
+  font-size: 0.1rem;
+  color: #333333;
+  position: relative;
+}
+.dialog-coup .storeContent .storeCoupon .coupon .bottom {
+  width: 100%;
+  height: 0.28rem;
+  line-height: 0.3rem;
+  font-size: 0.12rem;
+  color: white;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_hongbao {
+  background-image: url("../../static/images/quan_bg_hongbao.png");
+  background-size: 100% 100%;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_qiang,
+.dialog-coup .storeContent .storeCoupon .coupon.type_yiling {
+  background-image: url("../../static/images/quan_bg.png");
+  background-size: 100% 100%;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_hongbao .top .hongbaoTxt {
+  display: inline-block;
+  margin-top: 0.28rem;
+  max-width: 0.4rem;
+  white-space: normal;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_qiang .top .typeSign,
+.dialog-coup .storeContent .storeCoupon .coupon.type_yiling .top .typeSign {
+  display: inline-block;
+  width: 0.31rem;
+  height: 0.31rem;
+  background: transparent;
+  color: black;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_qiang .top .typeSign span,
+.dialog-coup .storeContent .storeCoupon .coupon.type_yiling .top .typeSign span {
+  display: inline-block;
+  font-size: 0.12rem;
+  text-align: center;
+  color: white;
+  position: absolute;
+  top: 0;
+  left: 2px;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_qiang .top .typeSign::before,
+.dialog-coup .storeContent .storeCoupon .coupon.type_yiling .top .typeSign::before {
+  border: 0.16rem solid transparent;
+  border-top: 0.16rem solid #359ed1;
+  border-left: 0.16rem solid #359ed1;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_qiang .top .detailIcon,
+.dialog-coup .storeContent .storeCoupon .coupon.type_yiling .top .detailIcon {
+  display: inline-block;
+  width: 0.12rem;
+  height: 0.12rem;
+  background-image: url("../../static/images/detailIcon.png");
+  background-size: 100% 100%;
+  position: absolute;
+  top: 0.05rem;
+  right: 0.05rem;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_qiang .top .priceLine,
+.dialog-coup .storeContent .storeCoupon .coupon.type_yiling .top .priceLine {
+  color: #333333;
+  padding-top: 0.04rem;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_qiang .top .priceLine .priceNum,
+.dialog-coup .storeContent .storeCoupon .coupon.type_yiling .top .priceLine .priceNum {
+  font-size: 0.25rem;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_qiang .top .descLine,
+.dialog-coup .storeContent .storeCoupon .coupon.type_yiling .top .descLine {
+  color: #999999;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_qiang .top .progressLine {
+  width: 0.89rem;
+  height: 0.05rem;
+  margin: 0.05rem auto 0 auto;
+  position: relative;
+  border-radius: 0.025rem;
+  overflow: hidden;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_qiang .top .progressLine .bar {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../static/images/jindutiao_bg.png");
+  background-size: 100% 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_qiang .top .progressLine .barIn {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #E53D35;
+  border-radius: 0.025rem;
+  width: 50%;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_qiang .bottom .lingqu {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.18rem;
+  line-height: 0.19rem;
+  text-align: center;
+  background-color: #E53D35;
+  border-radius: 0.09rem;
+}
+.dialog-coup .storeContent .storeCoupon .coupon.type_yiling .bottom .shiyong {
+  display: inline-block;
+  width: 0.7rem;
+  height: 0.18rem;
+  line-height: 0.19rem;
+  color: #E53D35;
+  border: 1px solid #E53D35;
+  border-radius: 0.09rem;
+}
+.dialog-stores .slide-bar {
+  height: 0.6rem;
+  box-shadow: 0 -1px 4px 1px #eee;
+}
+.dialog-stores .slide-bar .iconBar {
+  width: 100%;
+  height: 0.25rem;
+  text-align: center;
+}
+.dialog-stores .slide-bar .iconBar i {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.05rem;
+  background: #E7E8E7;
+  border-radius: 0.025rem;
+  position: relative;
+  top: 0.04rem;
+}
+.dialog-stores .slide-bar .titleLine {
+  height: 0.35rem;
+  line-height: 0.3rem;
+  font-size: 0.16rem;
+  text-align: center;
+}
+.dialog-stores .slide-bar .titleLine .storeNum {
+  text-align: center;
+  color: #E12219;
+}
+.store-list {
+  width: 100%;
+  overflow: scroll;
+}
+.store-list .storeItem {
+  padding: 0.15rem 0.2rem;
+  border-bottom: 1px solid #E4E5E4;
+  font-size: 0;
+}
+.store-list .storeItem .item_left {
+  vertical-align: top;
+  display: inline-block;
+  width: 2.73rem;
+}
+.store-list .storeItem .item_left .nameLine {
+  font-size: 0.14rem;
+}
+.store-list .storeItem .item_left .nameLine .name {
+  color: #333333;
+}
+.store-list .storeItem .item_left .nameLine .activityList {
+  vertical-align: text-top;
+  font-size: 0.1rem;
+  color: white;
+}
+.store-list .storeItem .item_left .nameLine .activityList .activityItem {
+  display: inline-block;
+  width: 0.17rem;
+  height: 0.17rem;
+  line-height: 0.18rem;
+  text-align: center;
+  border-radius: 50%;
+  margin-left: 0.01rem;
+  position: relative;
+  top: 1px;
+}
+.store-list .storeItem .item_left .nameLine .activityList .activityItem.type_jiang {
+  background-color: #d6025c;
+}
+.store-list .storeItem .item_left .nameLine .activityList .activityItem.type_cu {
+  background-color: #F68902;
+}
+.store-list .storeItem .item_left .nameLine .activityList .activityItem.type_qiang {
+  background-color: #359ED1;
+}
+.store-list .storeItem .item_left .supportLine {
+  margin-top: 0.04rem;
+  font-size: 0.12rem;
+  color: #999999;
+}
+.store-list .storeItem .item_left .supportLine .supportList {
+  font-size: 0.1rem;
+}
+.store-list .storeItem .item_left .supportLine .supportList .supportItem {
+  border: 1px solid #999999;
+  padding: 3px 2px 1px 2px;
+  border-radius: 2px;
+}
+.store-list .storeItem .item_left .supportLine .supportList .supportItem.flashPay_apple .payLogo {
+  display: inline-block;
+  width: 0.25rem;
+  height: 0.12rem;
+  background-image: url("../../static/images/paylogo_apple.png");
+  background-size: 100% 100%;
+  position: relative;
+  top: 0.03rem;
+  margin: 0 2px;
+}
+.store-list .storeItem .item_left .supportLine .supportList .supportItem.flashPay_huawei .payLogo {
+  display: inline-block;
+  width: 0.25rem;
+  height: 0.12rem;
+  background-image: url("../../static/images/paylogo_huawei.png");
+  background-size: 100% 100%;
+  position: relative;
+  top: 0.03rem;
+  margin: 0 2px;
+}
+.store-list .storeItem .item_left .supportLine .supportList .supportItem.flashPay_samsung .payLogo {
+  display: inline-block;
+  width: 0.57rem;
+  height: 0.12rem;
+  background-image: url("../../static/images/paylogo_samsung.png");
+  background-size: 100% 100%;
+  position: relative;
+  top: 0.035rem;
+  margin: 0 2px;
+}
+.store-list .storeItem .item_right {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  width: 0.6rem;
+  font-size: 0;
+}
+.store-list .storeItem .item_right .storeDistance {
+  font-size: 0.12rem;
+  text-align: center;
+}
+.store-list .storeItem .item_right .storeDistance .distanceSign {
+  margin-left: 5px;
+}
+.store-list .storeItem .item_right .storeActivity {
+  text-align: center;
+  margin-top: 0.06rem;
+}
+.store-list .storeItem .item_right .storeActivity img {
+  width: 0.17rem;
+  height: 0.22rem;
 }
 
 /*# sourceMappingURL=lessmap/index.css.map */
