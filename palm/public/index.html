@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="screen-orientation" content="portrait" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=yes" />
+  <meta name="full-screen" content="yes" />
+  <meta name="x5-fullscreen" content="true" />
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="pragma" content="no-cache" />
+  <meta http-equiv="expires" content="0" />
+  <link rel="icon" href="https://www.jd.com/favicon.ico" type="image/x-icon" />
+  <title></title>
+  <script src="https://m.jr.jd.com/crayfish/zui/bridge/1.0.7/bridge.js"></script>
+  <script src="https://pb.jd.com/common2/after/js/jdShare.js"></script>
+  <script src="https://m.jr.jd.com/mjractivity/data_source_100002795.js"></script>
+  <script>
+    var data_source = window.data_source_100002795
+  </script>
+  <script>
+      (function () {
+        var resizeEvt = "orientationchange" in window ? "orientationchange" : "resize"
+        var docEl = document.documentElement
+        function resizeFn() {
+          var docW = docEl.clientWidth
+          if (docW > 750) {
+            docW = 750
+          }
+          docEl.style.fontSize = (docW * 100) / 750 + "px"
+        }
+        resizeFn()
+        window.addEventListener(resizeEvt, resizeFn)
+      })()
+  </script>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <!--zepto 因为唤起商城app组件和动画js不兼容 需先引zepto-->
+  <!--  <script src="https://storage.jd.com/jrcommon/js/zepto.min.js"></script>-->
+  <!--动画TweenMax-->
+  <!--  <script src="https://storage.jd.com/jrcommon/js/TweenMax.min.js"></script>-->
+  <!--唤起商城APP-->
+  <!--  <script src="https://wq.360buyimg.com/js/common/dest/wq.imk.downloadAppPlugin.min.js"></script>-->
+
+  <!--aks加密-->
+  <!--  <script type="text/javascript" src="https://jrsecstatic.jdpay.com/jr-sec-dev-static/cryptico.min.js"></script>-->
+
+  <!--天盾风控-->
+  <!--  <script>-->
+  <!--    var bp_appid = "";-->
+  <!--    var bp_bizid = "";-->
+  <!--  </script>-->
+  <!--  <script src="//gia.jd.com/m.html"></script>-->
+  <!--  <script src="//gias.jd.com/js/m.js"></script>-->
+  <!--生物探针加了之后浏览器里模拟手机领奖会被风控 开发时需注释-->
+  <!--<script src="//bps.jd.com/js/ts.js"></script>-->
+
+  <!--sgm监控-->
+  <script async crossorigin src="https://sgm-static.jd.com/sgm.js" name="SGMH5" sid="f92ded0950ce4aed92eaec3f4a4a9ac2"
+    appKey="jdpay-webapp"></script>
+
+  <!--奇点埋点-->
+  <script>
+    var _qd = _qd || {};
+    _qd['module'] = '9320009';
+  </script>
+  <script src="//jrclick.jd.com/qidian.js"></script>
+  <script src="https://storage.jd.com/jrcommon/js/wxShare.js"></script>
+  <script src="https://pb.jd.com/common2/after/js/jpfesdk.js"></script>
+</body>
+
+</html>
