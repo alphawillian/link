@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+      #fundUpDownContainer {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="#fundUpDownContainer">
+      <div class="title">
+        <span class="titleItem">份额参考净值</span>
+        <span class="titleItem">单位净值</span>
+        <span class="titleItem">累计净值</span>
+      </div>
+
+    </div>
+    <canvas id="myChart"></canvas>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+  <script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.4.2/f2.min.js"></script>
+  <script>
+    function getFundData (type, fundcode, month) {
+      type = type ? type : 'nav'
+      let url = ''
+      if (type === 'nav') {
+        url = 'https://lcj.jsfund.cn/v0/fundnavbyfundcode'
+      } else {
+        url = 'https://lcj.jsfund.cn/v1/fund_estimation'
+      }
+      url = 'https://e.jsfund.cn/izenportal/service/fundinfo/getFundUpDown'
+      fundcode = '070008'
+      let startDate = '2019-3-12'
+      let xhr = new XMLHttpRequest()
+      xhr.open('post', url)
+      xhr.withCredentials = false
+      xhr.setRequestHeader('Accept', 'application/json, text/plain, */*')
+      // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+      let req = new FormData()
+      req.append('fundcode', fundcode)
+      req.append('month', month)
+      req.append('startDate', startDate)
+      xhr.send(req)
+      xhr.onreadystatechange = function () {
+        if(xhr.readyState === 4 && xhr.status === 200 && xhr.responseText) {
+          let res = {}
+          try {
+            res = JSON.parse(xhr.responseText)
+            handleData(res.data.result, type)
+          } catch (err) {
+            console.log('err:', err)
+            alert('网络繁忙，请稍后再试！')
+          }
+          
+        }
+      }
+      
+
+    }
+    function handleChange () {
+      let showObj = {
+        pnav: {
+          isShow: true
+        },
+        nav: {
+          isShow: false,
+          range: 1,
+        },
+        anav: {
+          isShow: false,
+          range: 1
+        }
+      }
+    }
+
+    function handleData(data, type, obj) {
+      console.log(type)
+      console.log('data:', data)
+      obj = {
+        tickCount: 3
+      }
+      const chart = new F2.Chart({
+        id: 'myChart',
+        pixelRatio: window.devicePixelRatio
+      });
+      chart.source(data, {
+        time: {
+          type: 'timeCat',
+          tickCount: 3,
+          range: [ 0, 1 ]
+        },
+        tem: {
+          tickCount: 5,
+          min: 0
+        }
+      });
+
+      chart.axis('time', {
+        label: function label(text, index, total) {
+          const textCfg = {};
+          if (index === 0) {
+            textCfg.textAlign = 'left';
+          } else if (index === total - 1) {
+            textCfg.textAlign = 'right';
+          }
+          return textCfg;
+        }
+      });
+      chart.tooltip({
+        showCrosshairs: true
+      });
+
+      chart.area()
+        .position('time*tem')
+        .color('l(90) 0:black 1:blue')
+        .shape('smooth');
+      chart.line()
+        .position('time*tem')
+        .color('l(90) 0:white 1:black')
+        .shape('smooth');
+      chart.render();
+
+      
+    }
+    getFundData ('nav', '000751', '1')
+    
+
+
+
+</script>
+</html>
