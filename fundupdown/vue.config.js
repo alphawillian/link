@@ -29,7 +29,7 @@ module.exports = {
     loaderOptions: {} // 将选项传递给与CSS相关的加载器 修改css相关加载器配置 css-loader postcss-loader sass-loader less-loader stylus-loader
   },
   devServer: { // 支持webpack-dev-server的所有选项
-    host: 'localhost',
+    host: 'static1.jsfund.cn',
     port: '80',
     https: false
   },

@@ -1,141 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <style>
-      #fundUpDownContainer {
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="#fundUpDownContainer">
-      <div class="title">
-        <span class="titleItem">份额参考净值</span>
-        <span class="titleItem">单位净值</span>
-        <span class="titleItem">累计净值</span>
-      </div>
 
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title><%= htmlWebpackPlugin.options.title %></title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      margin: 0;
+      padding: 0;
+    }
+
+    #fundUpDownContainer {
+      text-align: center;
+      font-size: 0;
+    }
+
+    #fundUpDownContainer .hide {
+      display: none !important;
+    }
+
+    #fundUpDownContainer .title {
+      box-sizing: border-box;
+      font-size: 15px;
+      color: #787878;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    #fundUpDownContainer .title span {
+      height: 40px;
+      line-height: 40px;
+    }
+
+    #fundUpDownContainer .title .active {
+      color: #ff3344;
+      border-bottom: 2px solid #ff3344;
+    }
+
+    #fundUpDownContainer .footer {
+      height: 36px;
+      line-height: 36px;
+      font-size: 14px;
+      color: #787878;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    #fundUpDownContainer .footer .item {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    #fundUpDownContainer .footer .item.info {
+      box-sizing: border-box;
+      padding: 0 10px;
+
+      background-color: white;
+    }
+
+    #fundUpDownContainer .footer .item.info span {
+      display: inline-block;
+      border-right: none;
+    }
+
+    #fundUpDownContainer .footer .item.info .more {
+      color: #ff3344;
+      width: 60px;
+      flex-grow: 0;
+      flex-shrink: 0;
+      background-color: white;
+    }
+
+    #fundUpDownContainer .footer .item.info .textInfo {
+      white-space: nowrap;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      /* max-width: 70%; */
+      background-color: white;
+    }
+
+    #fundUpDownContainer .footer .item span {
+      flex: 1;
+      border-right: 1px solid #f0f0f0;
+      background-color: #f9f9f9;
+    }
+
+    #fundUpDownContainer .footer .item span:nth-last-of-type(1) {
+      border-right: none;
+    }
+
+    #fundUpDownContainer .footer .item span.active {
+      color: #444444;
+      background-color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+      Please enable it to continue.</strong>
+  </noscript>
+  <div id="fundUpDownContainer">
+    <div class="title">
+      <span data-index="1" class="active">份额参考净值</span>
+      <span data-index="2" class="">单位净值</span>
+      <span data-index="3" class="">累计净值</span>
+    </div>
+    <div class="subTitle">
+      <div class="item">
+        <span class="itemIn">
+          <span class="txt">最新估值</span><span class="num">3.2888</span>
+        </span>
+      </div>
     </div>
     <canvas id="myChart"></canvas>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
-  <script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.4.2/f2.min.js"></script>
-  <script>
-    function getFundData (type, fundcode, month) {
-      type = type ? type : 'nav'
-      let url = ''
-      if (type === 'nav') {
-        url = 'https://lcj.jsfund.cn/v0/fundnavbyfundcode'
+    <div class="footer">
+      <div data-index="1" class="item info hide">
+        <span
+          class="textInfo">免责声明：份额参考净值在每个交易日9:30-15:00盘中实时更新，不对应基金的实际价值，也不代表投资者实际交易价格。基金申购赎回严格遵循未知价原则，即基金申购赎回价格以受理申请当日收市后计算的基金份额净值为基准进行计算。如遇基金分红，当日份额参考净值可能和收市后正式发布的净值存在一定差异。您可在收市后关注净值披露信息。份额参考净值仅供参考。</span>
+        <div class="more">查看更多</div>
+      </div>
+      <div data-index="2" class="item">
+        <span class="active">近一月</span>
+        <span class="">近三月</span>
+        <span class="">近六月</span>
+        <span class="">近一年</span>
+      </div>
+      <div data-index="3" class="item">
+        <span class="active">近一月</span>
+        <span class="">近三月</span>
+        <span class="">近六月</span>
+        <span class="">近一年</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+<script src="jquery-3.4.1.min.js"></script>
+<script src="https://gw.alipayobjects.com/os/antv/assets/f2/3.4.2/f2.min.js"></script>
+<script>
+  eventInit()
+  function eventInit() {
+    // title点击事件
+    $('#fundUpDownContainer .title span').click(function (data) {
+      // console.log('data:', data)
+      console.log('$this:', $(this))
+      if ($(this).hasClass('active')) { // 点击为当前显示的title
       } else {
-        url = 'https://lcj.jsfund.cn/v1/fund_estimation'
-      }
-      url = 'https://e.jsfund.cn/izenportal/service/fundinfo/getFundUpDown'
-      fundcode = '070008'
-      let startDate = '2019-3-12'
-      let xhr = new XMLHttpRequest()
-      xhr.open('post', url)
-      xhr.withCredentials = false
-      xhr.setRequestHeader('Accept', 'application/json, text/plain, */*')
-      // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-      let req = new FormData()
-      req.append('fundcode', fundcode)
-      req.append('month', month)
-      req.append('startDate', startDate)
-      xhr.send(req)
-      xhr.onreadystatechange = function () {
-        if(xhr.readyState === 4 && xhr.status === 200 && xhr.responseText) {
-          let res = {}
-          try {
-            res = JSON.parse(xhr.responseText)
-            handleData(res.data.result, type)
-          } catch (err) {
-            console.log('err:', err)
-            alert('网络繁忙，请稍后再试！')
+        $(this).addClass('active').siblings().removeClass('active')
+        var titleIndex = $(this).attr('data-index')
+        let $footerItem = $('#fundUpDownContainer .footer .item')
+        console.log('$footerItem:', $footerItem)
+        $footerItem.each(function (index, item) {
+          console.log('item:', $(item))
+          if ($(item).attr('data-index') === titleIndex) {
+            $(item).removeClass('hide').siblings().addClass('hide')
           }
-          
-        }
+        })
       }
-      
 
+    })
+  }
+  function getFundData(type, fundcode, month) {
+    type = type ? type : 'nav'
+    let url = ''
+    if (type === 'nav') {
+      url = 'https://lcj.jsfund.cn/v0/fundnavbyfundcode'
+    } else {
+      url = 'https://lcj.jsfund.cn/v1/fund_estimation'
     }
-    function handleChange () {
-      let showObj = {
-        pnav: {
-          isShow: true
-        },
-        nav: {
-          isShow: false,
-          range: 1,
-        },
-        anav: {
-          isShow: false,
-          range: 1
+    url = 'https://e.jsfund.cn/izenportal/service/fundinfo/getFundUpDown'
+    fundcode = '070008'
+    let startDate = '2019-3-12'
+    let xhr = new XMLHttpRequest()
+    xhr.open('post', url)
+    xhr.withCredentials = false
+    xhr.setRequestHeader('Accept', 'application/json, text/plain, */*')
+    // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+    let req = new FormData()
+    req.append('fundcode', fundcode)
+    req.append('month', month)
+    req.append('startDate', startDate)
+    xhr.send(req)
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200 && xhr.responseText) {
+        let res = {}
+        try {
+          res = JSON.parse(xhr.responseText)
+          handleData(res.data.result, type)
+        } catch (err) {
+          console.log('err:', err)
+          alert('网络繁忙，请稍后再试！')
         }
+
       }
     }
 
-    function handleData(data, type, obj) {
-      console.log(type)
-      console.log('data:', data)
-      obj = {
-        tickCount: 3
+
+  }
+  function handleChange() {
+    let showObj = {
+      pnav: {
+        isShow: true
+      },
+      nav: {
+        isShow: false,
+        range: 1,
+      },
+      anav: {
+        isShow: false,
+        range: 1
       }
-      const chart = new F2.Chart({
-        id: 'myChart',
-        pixelRatio: window.devicePixelRatio
-      });
-      chart.source(data, {
-        time: {
-          type: 'timeCat',
-          tickCount: 3,
-          range: [ 0, 1 ]
-        },
-        tem: {
-          tickCount: 5,
-          min: 0
-        }
-      });
-
-      chart.axis('time', {
-        label: function label(text, index, total) {
-          const textCfg = {};
-          if (index === 0) {
-            textCfg.textAlign = 'left';
-          } else if (index === total - 1) {
-            textCfg.textAlign = 'right';
-          }
-          return textCfg;
-        }
-      });
-      chart.tooltip({
-        showCrosshairs: true
-      });
-
-      chart.area()
-        .position('time*tem')
-        .color('l(90) 0:black 1:blue')
-        .shape('smooth');
-      chart.line()
-        .position('time*tem')
-        .color('l(90) 0:white 1:black')
-        .shape('smooth');
-      chart.render();
-
-      
     }
-    getFundData ('nav', '000751', '1')
-    
+  }
+
+  function handleData(data, type, obj) {
+    console.log(type)
+    console.log('data:', data)
+    obj = {
+      tickCount: 3
+    }
+    const chart = new F2.Chart({
+      id: 'myChart',
+      pixelRatio: window.devicePixelRatio
+    });
+    chart.source(data, {
+      time: {
+        type: 'timeCat',
+        tickCount: 3,
+        range: [0, 1]
+      },
+      tem: {
+        tickCount: 5,
+        min: 0
+      }
+    });
+
+    chart.axis('time', {
+      label: function label(text, index, total) {
+        const textCfg = {};
+        if (index === 0) {
+          textCfg.textAlign = 'left';
+        } else if (index === total - 1) {
+          textCfg.textAlign = 'right';
+        }
+        return textCfg;
+      }
+    });
+    chart.tooltip({
+      showCrosshairs: true
+    });
+
+    chart.area()
+      .position('time*tem')
+      .color('l(90) 0:black 1:blue')
+      .shape('smooth');
+    chart.line()
+      .position('time*tem')
+      .color('l(90) 0:white 1:black')
+      .shape('smooth');
+    chart.render();
+
+
+  }
+  getFundData('nav', '000751', '1')
+
 
 
 
 </script>
+
 </html>
