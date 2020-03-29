@@ -1,0 +1,24 @@
+{
+  "name": "jsfund",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "gulp server"
+  },
+  "keywords": [
+    "jsfund",
+    "pc"
+  ],
+  "author": "zhanggx01 os-wanggw",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.21.0",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-imagemin": "^3.4.0",
+    "gulp-less": "^3.3.2",
+    "gulp-postcss": "^7.0.0",
+    "gulp-uglify": "^3.0.0"
+  }
+}
